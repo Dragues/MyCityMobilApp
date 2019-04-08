@@ -49,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
         });
         mainFrame = findViewById(R.id.main_frame);
 
-        radiusHardAlgorithm = Math.sqrt(hordaLen / (2 - 2 * Math.cos(Math.toRadians(degreeStep))));
+
+        // из прямоугольного треугольника выссчитываем в круге
+        // была мысль выссчитывать через теорему косинусов минимальный радиус зная хорду и угол (step) но так проще
+        radiusHardAlgorithm = hordaLen / (2 * Math.sin(Math.toRadians((double)degreeStep / 2)));
 
         final ViewTreeObserver observer = mainFrame.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(
@@ -68,24 +71,26 @@ public class MainActivity extends AppCompatActivity {
 
             setHumanPosition(touchX, touchY);
 
-
             FrameLayout.LayoutParams paramsStart = (FrameLayout.LayoutParams) taxiView.getLayoutParams();
             int taxiX = paramsStart.leftMargin;
             int taxiY = paramsStart.topMargin;
 
             double betweenRange = Math.sqrt(Math.pow(touchX - taxiX, 2) + Math.pow(touchY - taxiY, 2));
 
-            if (betweenRange < radiusHardAlgorithm && !simpleRadio.isChecked()) {
-                while (betweenRange < radiusHardAlgorithm * 3) {
+            // отправляем машинку покататься  на нужно расстояние чтобы потом сделать петлю
+            if (betweenRange < radiusHardAlgorithm * 2 && !simpleRadio.isChecked()) {
+                while (betweenRange < radiusHardAlgorithm * 2) {
                     int deltaX = (int) (hordaLen * Math.cos((double) (90 - currentRotate) * Math.PI / 180)); //  перевожу сам в радианы, не доверяю Math.toRadians
                     int deltaY = (int) (-hordaLen * Math.sin((double) (90 - currentRotate) * Math.PI / 180));
                     taxiX += deltaX;
                     taxiY += deltaY;
                     betweenRange = Math.sqrt(Math.pow(touchX - taxiX, 2) + Math.pow(touchY - taxiY, 2));
                 }
+                // отправляем к нужной точке
                 runToPoint(new Point(taxiX , taxiY), true, new Point(touchX, touchY));
             }
             else {
+                // классически запускаем машинку к месту назначения без отъезжания (делаем петлю/разворачиваемся на месте + едем до точки по прямой автомагистрали)
                 runStandardTaxiAlgorithm(touchX, touchY);
             }
             return false;
@@ -195,10 +200,5 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
     }
 }
