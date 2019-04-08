@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MyCityMobilApp</string>
+    <string name="simple_label">Simple</string>
+    <string name="hard_label">Hard</string>
+</resources>

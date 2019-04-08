@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+    <FrameLayout
+            android:id="@+id/main_frame"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:context=".MainActivity">
+
+        <ImageView
+                android:id="@+id/taxi_view"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="Hello World!"
+                android:background="@drawable/image"/>
+
+        <ImageView
+                android:id="@+id/human_view"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="Hello World!"
+                android:visibility="gone"
+                android:background="@drawable/ptq8lanac"/>
+
+
+    </FrameLayout>
+
+    <RadioGroup
+            android:id="@+id/algorithm_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+    android:orientation="horizontal">
+
+        <RadioButton
+                android:id="@+id/simple_radio"
+                android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:checked="true"
+                     android:text="@string/simple_label"/>
+        <RadioButton
+                android:id="@+id/hard_radio"
+                android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/hard_label"/>
+    </RadioGroup>
+</LinearLayout>
